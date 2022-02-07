@@ -2,8 +2,12 @@
 #include <stdlib.h>
 
 typedef struct {
+    int ind;
     int demanda;
-    bool passouCarga;
-    int indice;
+    int passouCarga;
 } Tcidade;
 
+Tcidade criaCidade(int ind, int demanda);
+
+void passarCarga(Tcidade* cidade);
+void esvaziaCarga(Tcidade* cidade);
