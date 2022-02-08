@@ -36,7 +36,6 @@ int main()
     end = clock();
     
     double tempo_gasto = ((double) (end - start) / CLOCKS_PER_SEC);  // Registra tempo gasto
-
 }
 
 // Função para leitura dos arquivos
