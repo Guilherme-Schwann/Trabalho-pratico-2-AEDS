@@ -12,15 +12,16 @@
 
 /* Includes e Defines */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "distancias.h"
+#include "demandas.h"
+
 #include <time.h>
 #define NUM_ARQUIVOS_TESTE 7
 
 /* Declarações */
 
 void leitura_arquivos();
-void nome_arquivo_testes(unsigned int num_teste, char* nome_arquivo);
+void nome_arquivo_testes(int num_teste, char* pnome_arquivo);
 
 
 /* Funções */
@@ -44,15 +45,17 @@ void leitura_arquivos()
     // Declarações
     int N;  // Quantidade de cidades, linha 1
     int Qv;  // Capacidade do caminhão, linha 2
-    int* Qi;  // Demanda de cada cidade, linha 3, implementada como vetor
+    int D;  // Demanda de cada cidade, linha 3, implementada como vetor
     int Ci, Cj, Dij;  // Cidade i, Cidade j, Distância entre cidades i e j, linhas seguintes
+    
     FILE* input;  // Arquivo de entrada
     FILE* output;  // Arquivo de saída (possivelmente necessario)
 
     for (int num_teste = 1; num_teste <= NUM_ARQUIVOS_TESTE; num_teste++)  // Percorre todos os arquivos de teste
     {
         char nome_arquivo[31];
-        nome_arquivo_testes(num_teste, &nome_arquivo);  // ? deve ta certo ?
+        char *pnome_arquivo = nome_arquivo;
+        nome_arquivo_testes(num_teste, pnome_arquivo);  
         input = fopen(nome_arquivo, "r");  // Abre o arquivo para leitura
 
         /* 
@@ -67,7 +70,49 @@ void leitura_arquivos()
         fscanf(input, "%d", &Qv);  // Recebe a capacidade de um caminhão
 
         // Linha 3
-        // ok não sei como vou fazer ainda pq esse número depende então vo parar
+        int tam;
+        Tdemandas *vetDem;
+    
+        tam = N-1;
+        vetDem = criar_vetDem(tam);
+    
+        for (int i=0;i<tam;i++){
+            fscanf(input, "%d", &D);
+            preencher_vetDem(vetDem,i,D);
+        }
+    
+        // Restante das linhas
+        Tdistancias *matDist;
+        matDist = criar_matDist(N);
+    
+        int L;
+    
+        if (N == 3){
+            for (int k = 0; k <= N; k++){
+                fscanf(input, "%d %d %d", &Ci, &Cj, &Dij);
+                preencher_matDist(matDist, Ci, Cj, Dij);
+            }
+        }
+        else{
+            L = N + (N-1);
+            for (int k = 0; k <= L; k++){
+                fscanf(input, "%d %d %d", &Ci, &Cj, &Dij);
+                preencher_matDist(matDist, Ci, Cj, Dij);
+            }
+        }
+    
+        fclose(input);
+        
+        printf("Num teste = %d\n", num_teste);
+    
+        printf("Numero Cidades = %d\n",N);
+        printf("Capacidade Caminhao = %d\n",Qv);
+    
+        exibir_vetDem(vetDem);
+
+        exibir_matDist(matDist);
+        
+        printf("\n");
 
         // permuta()
         // calcula_distancia()
@@ -77,7 +122,7 @@ void leitura_arquivos()
 }
 
 // Escolhe os arquivos a partir do número de teste
-void nome_arquivo_testes(unsigned int num_teste, char* nome_arquivo)
+void nome_arquivo_testes(int num_teste, char* nome_arquivo)
 {
     /* Caso mais testes sejam criados, manutenção aqui é necessária */
     
