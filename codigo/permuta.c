@@ -13,7 +13,7 @@ void insereZeroInicial(Tpermuta* permuta, int linhaMF);
 
 Tpermuta inicializaPermuta(int tam, int* lista, int nVeic){
     Tpermuta permuta;
-    int i;
+    int i, j;
     permuta.var = 0;
     permuta.tam = tam;
     permuta.numdeperm = numDePermutacoes(tam);
@@ -52,7 +52,7 @@ void permutacao_recursiva(Tpermuta* permuta, int k)
     len = permuta->tam;
 
     if (k == len){
-        for (j = 0; j < 4; j++){
+        for (j = 0; j < permuta->tam; j++){
             permuta->matrizRes[permuta->var][j] = permuta->lista[j];
         }
         permuta->var++;
@@ -85,11 +85,10 @@ void combinationUtil(int arr[], int data[], int start, int end, int index, int r
 {
     int j, i;
     // Current combination is ready to be printed, print it
-    if (index == r && r <= permuta->nVeic) {
-        for (j = 0; j < r && r <= permuta->nVeic; j++)
-            printf("%d ", data[j]);
+    if (index == r) {
+        for (j = 0; j < r; j++){
             permuta->matrizComb[permuta->var][j] = data[j];
-        printf("\n");
+        }
         permuta->var++;
         return;
     }
@@ -141,7 +140,7 @@ void gera_combinacoes(Tpermuta* permuta){
         generateCombination(arr, n, r, permuta);
     permuta->matrizFinal = (int**) malloc((((permuta->var+2) * permuta->numdeperm)) * sizeof(int*));
     for (i = 0; i < ((permuta->var+2) * permuta->numdeperm); i++){
-        permuta->matrizFinal[i] = (int*) malloc((2*permuta->tam)*sizeof(int));
+        permuta->matrizFinal[i] = (int*) malloc((3*permuta->tam)*sizeof(int));
     }
     geraMatrizFinal(permuta);
 }
@@ -171,7 +170,7 @@ void geraMatrizFinal(Tpermuta* permuta){
     varlinha = 0;
     varconta = 0;
     for (i = 0; i<(permuta->var+2) * permuta->numdeperm; i++){
-        for (j = 0; j < 2*permuta->tam; j++){
+        for (j = 0; j < 3*permuta->tam; j++){
             if (j<permuta->tam){
                 permuta->matrizFinal[i][j] = permuta->matrizRes[varlinha][j];
             } else {
@@ -185,7 +184,7 @@ void geraMatrizFinal(Tpermuta* permuta){
         }
     }
     for (i = 0; i < permuta->numdeperm; i++){
-        for (j = 0; j < permuta->var+2; j++){
+        for (j = 0; j < permuta->numdecomb+1; j++){
             if(j != 0){
                 insereZeros(permuta, permuta->matrizComb[j-1], i, linhaMF);
             }
@@ -199,7 +198,7 @@ void insereZeros(Tpermuta* permuta, int posZeros[], int linhaPermuta, int linhaM
     int i, j, temp, mod = 0;
     for (i = 0; i < permuta->tam-1; i++){
         if (posZeros[i] != 0){
-            for (j = permuta->tam - 1 +mod; j > posZeros[i]; j--){
+            for (j = permuta->tam - 1 + mod; j >= posZeros[i] + mod; j--){
                 temp = permuta->matrizFinal[linhaMF][j];
                 permuta->matrizFinal[linhaMF][j] = permuta->matrizFinal[linhaMF][j+2];
                 permuta->matrizFinal[linhaMF][j+2] = temp;
@@ -211,7 +210,7 @@ void insereZeros(Tpermuta* permuta, int posZeros[], int linhaPermuta, int linhaM
 
 void insereZeroInicial(Tpermuta* permuta, int linhaMF) {
     int i, temp;
-    for (i = (permuta->tam*2) - 2; i >= 0; i--){
+    for (i = (permuta->tam*3) - 2; i >= 0; i--){
         temp = permuta->matrizFinal[linhaMF][i];
         permuta->matrizFinal[linhaMF][i] = permuta->matrizFinal[linhaMF][i+1];
         permuta->matrizFinal[linhaMF][i+1] = temp;
