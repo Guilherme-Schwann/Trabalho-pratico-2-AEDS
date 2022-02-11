@@ -7,9 +7,9 @@ Tdistancias* criar_matDist(int n)
 
     mat = (Tdistancias*) malloc(sizeof(Tdistancias));
     mat->tam = n;
-    mat->matDist = (int**) malloc(n*sizeof(float*));
+    mat->matDist = (int**) malloc(n*sizeof(int*));
     for(i=0; i<n; i++)
-        mat->matDist[i] = (int*)calloc(n,sizeof(float));
+        mat->matDist[i] = (int*)calloc(n,sizeof(int));
         //calloc já atribui zero: matriz nula
         
     return mat;
