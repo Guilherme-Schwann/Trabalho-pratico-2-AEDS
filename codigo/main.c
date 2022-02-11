@@ -69,6 +69,8 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     int Qv;  // Capacidade do caminhão, linha 2
     int D;  // Demanda de cada cidade, linha 3, implementada como vetor
     int Ci, Cj, Dij;  // Cidade i, Cidade j, Distância entre cidades i e j, linhas seguintes
+
+    Tpermuta permutador;
     
     FILE* input;  // Arquivo de entrada
     FILE* output;  // Arquivo de saída (possivelmente necessario)
@@ -105,8 +107,7 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     matDist = criar_matDist(N);
     
     int num_linhas;
-    
-    if (N == 3)
+    if (N == 3)    
     {
         for (int k = 0; k <= N; k++)
         {
@@ -122,9 +123,11 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
                 preencher_matDist(matDist, Ci, Cj, Dij);
             }
         }
-    }
-    
-    fclose(input);      
+    } 
+    fclose(input);     
+
+    // Permutação
+
 
     printf("Teste numero %d\n", num_teste);
     

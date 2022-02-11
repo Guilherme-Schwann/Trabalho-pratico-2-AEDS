@@ -76,10 +76,6 @@ void troca_char(int* lista, int p1, int p2)
     lista[p2] = tmp;
 }
 
-/*
- * C program to print all combination of list of numbers
- */
-
 /*  Function to generate combination  */
 void combinationUtil(int arr[], int data[], int start, int end, int index, int r, Tpermuta* permuta)
 {
@@ -165,6 +161,7 @@ int combinacao(int n, int p)
 {
     return arranjo(n,p)/fatorial(p);
 }
+
 void geraMatrizFinal(Tpermuta* permuta){
     int i, j, varlinha, varconta, linhaMF = 0;
     varlinha = 0;
