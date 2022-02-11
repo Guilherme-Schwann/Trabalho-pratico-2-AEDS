@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "TAD-listaCidades/listaDeCidades.h"
+#include "../TAD-listaCidades/listaDeCidades.h"
 
 typedef struct{
     int tam;
@@ -19,3 +19,5 @@ typedef struct{
 Tpermuta inicializaPermuta(TlistaDeCidades lista);
 
 void escolhe_melhor_rota(Tpermuta *permuta, TlistaDeCidades lista);
+
+int combinacao(int n, int p);

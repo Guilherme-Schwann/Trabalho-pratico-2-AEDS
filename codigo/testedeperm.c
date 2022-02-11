@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "permuta.h"
+#include "TAD-permuta/permuta.h"
 
 int fatorial(int n)
 {

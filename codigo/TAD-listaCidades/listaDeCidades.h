@@ -1,6 +1,6 @@
 #include "../TAD-cidade/cidade.h"
 
-typedef struct {
+typedef struct{
     int** distancias;
     Tcidade *listaCidades;
     int numCidades;

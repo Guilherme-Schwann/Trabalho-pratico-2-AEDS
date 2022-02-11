@@ -18,9 +18,10 @@
 
 #include "distancias.h"
 #include "demandas.h"
-#include "permuta.h"
-#include "listaDeCidades.h"
+#include "../TAD-permuta/permuta.h"
 #include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_CHAR_LIMIT 31
 #define TRUE 1
@@ -89,8 +90,11 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     fscanf(input, "%d", &Qv);  // Recebe a capacidade de um caminhão
 
     // Linha 3
-    int tam;
+    int tam, i;
     Tdemandas *vetDem;
+
+    TlistaDeCidades listac;
+    Tpermuta permutador;
     
     tam = N-1;
     vetDem = criar_vetDem(tam);
@@ -106,28 +110,19 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     matDist = criar_matDist(N);
     
     int num_linhas;
-    if (N == 3)    
+    num_linhas = combinacao(N, 2);
+    for (int k = 0; k < num_linhas; k++)
     {
-        for (int k = 0; k <= N; k++)
-        {
-            fscanf(input, "%d %d %d", &Ci, &Cj, &Dij);
-            preencher_matDist(matDist, Ci, Cj, Dij);
-        }
-        else
-        {
-            num_linhas = N + (N-1);
-            for (int k = 0; k <= num_linhas; k++)
-            {
-                fscanf(input, "%d %d %d", &Ci, &Cj, &Dij);
-                preencher_matDist(matDist, Ci, Cj, Dij);
-            }
-        }
+        fscanf(input, "%d %d %d", &Ci, &Cj, &Dij);
+        preencher_matDist(matDist, Ci, Cj, Dij);
     }
 
     fclose(input);     
 
     // Permutação
     listac = inicializaLista(N, Qv);
+    registraDistancias(&listac, matDist->matDist);
+    registraDemandas(&listac, vetDem->vetDem);
     permutador = inicializaPermuta(listac);
 
     printf("Teste numero %d\n", num_teste);
@@ -136,9 +131,12 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     printf("Capacidade Caminhao = %d\n", Qv);
     exibir_vetDem(vetDem);
     exibir_matDist(matDist);
-    exibir_permuta(permutador);
+    printf("Melhor distância encontrda: %d\n", permutador.melhorDist);
+    printf("Melhor rota encontrada:\n");
+    for (i = 0; i < N*3; i++){
+        printf("%d ", permutador.melhorRota[i]);
     }
-
+    printf("\n");
 }
 
 // Escolhe os arquivos a partir do número de teste

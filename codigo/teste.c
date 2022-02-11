@@ -1,4 +1,4 @@
-#include "permuta.h"
+#include "TAD-permuta/permuta.h"
 #include <stdio.h>
 
 int main(void){

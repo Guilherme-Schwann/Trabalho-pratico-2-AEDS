@@ -5,7 +5,6 @@ void gera_permutacoes(Tpermuta* permuta);
 void gera_combinacoes(Tpermuta* permuta);
 void permutacao_recursiva(Tpermuta* permuta, int k);
 void troca_char(int* lista, int p1, int p2);
-int combinacao(int n, int p);
 void geraMatrizFinal(Tpermuta* permuta);
 void insereZeros(Tpermuta* permuta, int* posZeros, int linhaPermuta, int linhaMF);
 void insereZeroInicial(Tpermuta* permuta, int linhaMF);
