@@ -40,8 +40,8 @@ int main()
     // Declarações
     clock_t start, end;  // Clock
     int num_teste = 0;  // Número de teste dos arquivos
-    char *pnome_arquivo;  // Nome do arquivo lido para input
-    char *str_tempo;  // String de tempo
+    char *pnome_arquivo = " ";  // Nome do arquivo lido para input
+    char *str_tempo = " ";  // String de tempo
     FILE* output;  // Arquivo de saída
 
     printf("Escolha um numero de arquivo de teste (1 a 7): ");
