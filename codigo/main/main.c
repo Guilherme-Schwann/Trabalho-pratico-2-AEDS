@@ -44,7 +44,7 @@ int main()
     char nome_arquivo[MAX_CHAR_LIMIT];  // Nome do arquivo lido para input
     char tempo[MAX_CHAR_LIMIT];  // String de tempo
     char *pnome_arquivo = nome_arquivo;
-    char *str_tempo;
+    char *str_tempo = tempo;
     
     FILE* output;  // Arquivo de saída
 
