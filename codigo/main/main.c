@@ -22,6 +22,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_CHAR_LIMIT 31
 #define TRUE 1
@@ -57,7 +58,7 @@ int main()
     leitura_arquivos(num_teste, pnome_arquivo);
     end = clock();
     
-    double tempo_gasto = ((double) (end - start) / CLOCKS_PER_SEC);  // Registra tempo gasto
+    double tempo_gasto = ((double)(end - start) / CLOCKS_PER_SEC);  // Registra tempo gasto
     printf("Tempo gasto para permutação: %lf", tempo_gasto);
 
     return 0;
@@ -116,6 +117,12 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
         fscanf(input, "%d %d %d", &Ci, &Cj, &Dij);
         preencher_matDist(matDist, Ci, Cj, Dij);
     }
+    for (int k = 0; k < N; k++){
+        for (int j = 0; j < N; j++){
+            printf("%d ", matDist->matDist[k][j]);
+        }
+        printf("\n");
+    }
 
     fclose(input);     
 
@@ -133,7 +140,7 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     exibir_matDist(matDist);
     printf("Melhor distância encontrda: %d\n", permutador.melhorDist);
     printf("Melhor rota encontrada:\n");
-    for (i = 0; i < N*3; i++){
+    for (i = 0; i < (N-1)*3; i++){
         printf("%d ", permutador.melhorRota[i]);
     }
     printf("\n");

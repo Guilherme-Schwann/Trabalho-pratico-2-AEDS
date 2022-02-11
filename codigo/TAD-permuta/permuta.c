@@ -12,6 +12,7 @@ void insereZeroInicial(Tpermuta* permuta, int linhaMF);
 Tpermuta inicializaPermuta(TlistaDeCidades lista){
     Tpermuta permuta;
     int i, j, tam;
+    lista.numCidades -= 1;
     tam = lista.numCidades;
     permuta.var = 0;
     permuta.tam = tam;
@@ -133,8 +134,8 @@ void gera_combinacoes(Tpermuta* permuta){
     }
     for (r = 1; r<=5; r++)
         generateCombination(arr, n, r, permuta);
-    permuta->matrizFinal = (int**) malloc((((permuta->var+2) * permuta->numdeperm)) * sizeof(int*));
-    for (i = 0; i < ((permuta->var+2) * permuta->numdeperm); i++){
+    permuta->matrizFinal = (int**) malloc((((permuta->numdecomb+1) * permuta->numdeperm)) * sizeof(int*));
+    for (i = 0; i < ((permuta->numdecomb+1) * permuta->numdeperm); i++){
         permuta->matrizFinal[i] = (int*) malloc((3*permuta->tam)*sizeof(int));
     }
     geraMatrizFinal(permuta);
@@ -165,7 +166,7 @@ void geraMatrizFinal(Tpermuta* permuta){
     int i, j, varlinha, varconta, linhaMF = 0;
     varlinha = 0;
     varconta = 0;
-    for (i = 0; i<(permuta->var+2) * permuta->numdeperm; i++){
+    for (i = 0; i<(permuta->numdecomb+1) * permuta->numdeperm; i++){
         for (j = 0; j < 3*permuta->tam; j++){
             if (j<permuta->tam){
                 permuta->matrizFinal[i][j] = permuta->matrizRes[varlinha][j];
@@ -214,10 +215,11 @@ void insereZeroInicial(Tpermuta* permuta, int linhaMF) {
 }
 
 int calculaDist(int* rota, TlistaDeCidades lista){
-    int i, linha, coluna, dist = 0, cap = 0;
-    for (i = 0; i < (lista.numCidades*3)-1; i++){
+    int i, linha, coluna, cap = 0;
+    int dist = 0;
+    for (i = 0; i < ((lista.numCidades)*3)-1; i++){
         if (rota[i] != 0){
-            cap+=lista.listaCidades->demanda;
+            cap+=lista.listaCidades[rota[i]].demanda;
             if (cap > lista.capacidadeVeic){
                 return 0;
             }
@@ -233,7 +235,11 @@ int calculaDist(int* rota, TlistaDeCidades lista){
 
 void escolhe_melhor_rota(Tpermuta *permuta, TlistaDeCidades lista){
     int i, *vendoRota, dist, melhorDist, *melhorRota;
-    vendoRota = (int*) malloc(lista.numCidades * sizeof(int));
+    vendoRota = (int*) malloc((lista.numCidades) * sizeof(int));
+    vendoRota = permuta->matrizFinal[0];
+    for (i = 0; i < (lista.numCidades)*3; i++){
+        printf("%d", vendoRota[i]);
+    }
     for (i = 0; i < (permuta->numdecomb+1) * permuta->numdeperm; i++){
         vendoRota = permuta->matrizFinal[i];
         dist = calculaDist(vendoRota, lista);
