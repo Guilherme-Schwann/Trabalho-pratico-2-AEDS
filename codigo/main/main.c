@@ -73,7 +73,7 @@ int main()
     fseek(output, 0, SEEK_END);  // Feito para imprimir na última linha
     fprintf(output, "%s %d %lf\n", str_tempo, num_teste, tempo_gasto);
     fclose(output);
-
+    system("PAUSE");
     return 0;
 }
 
