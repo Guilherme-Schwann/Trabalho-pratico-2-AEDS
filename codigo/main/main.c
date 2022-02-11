@@ -25,6 +25,7 @@
 #define TRUE 1
 #define PRIMEIRO_ARQUIVO_TESTE 1
 #define NUM_ARQUIVOS_TESTE 7
+#define MAX_CHAR_LIMIT 31
 
 /* Declarações */
 
@@ -40,8 +41,11 @@ int main()
     // Declarações
     clock_t start, end;  // Clock
     int num_teste = 0;  // Número de teste dos arquivos
-    char *pnome_arquivo;  // Nome do arquivo lido para input
-    char *str_tempo;  // String de tempo
+    char nome_arquivo[MAX_CHAR_LIMIT];  // Nome do arquivo lido para input
+    char tempo[MAX_CHAR_LIMIT];  // String de tempo
+    char *pnome_arquivo = nome_arquivo;
+    char *str_tempo = tempo;
+    
     FILE* output;  // Arquivo de saída
 
     printf("Escolha um numero de arquivo de teste (1 a 7): ");
