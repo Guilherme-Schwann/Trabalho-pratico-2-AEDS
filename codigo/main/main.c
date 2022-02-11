@@ -44,7 +44,7 @@ int main()
     char nome_arquivo[MAX_CHAR_LIMIT];  // Nome do arquivo lido para input
     char tempo[MAX_CHAR_LIMIT];  // String de tempo
     char *pnome_arquivo = nome_arquivo;
-    char *str_tempo = tempo;
+    char *str_tempo;
     
     FILE* output;  // Arquivo de saída
 
@@ -201,18 +201,17 @@ void nome_arquivo_testes(int num_teste, char* nome_arquivo)
 // Formata tempo atual para salvar no output
 void formata_tempo(char* str_tempo)
 {
-    time_t tempo_unix;
-    struct tm* tempo_info;
-    
-    time(&tempo_unix);  // Pega tempo em unix
-    tempo_info = localtime(&tempo_unix);  // Converte tempo em unix para tempo local
-    
-    sprintf(str_tempo,  // String de output
-        "[%d %d %d %d:%d:%d]",  // Formato
-        tempo_info->tm_mday,  // Dia
-        tempo_info->tm_mon + 1, // Mês
-        tempo_info->tm_year + 1900,  // Anos desde 1900
-        tempo_info->tm_hour,  // Hora
-        tempo_info->tm_min,  // Minuto
-        tempo_info->tm_sec);  // Segundo
+    time_t instante = time(0);
+    struct tm *tempoInfo = localtime(&instante);
+
+    // Guarda o horário de criação no formato DD MM AAAA HH:MM:SS
+
+    sprintf(str_tempo, // String
+            "[%d %d %d %d:%d:%d]", // Formato
+            tempoInfo->tm_mday, // Dia
+            tempoInfo->tm_mon + 1, // Mês
+            tempoInfo->tm_year + 1900, // Ano
+            tempoInfo->tm_hour, // Horas
+            tempoInfo->tm_min, // Minutos
+            tempoInfo->tm_sec); // Segundos
 }
