@@ -12,8 +12,6 @@
 
 /* 
  * Includes e Defines 
- *
- * aqui voce ve um "definer" em seu habitat natural
  */
 
 #include "distancias.h"
@@ -24,7 +22,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_CHAR_LIMIT 31
 #define TRUE 1
 #define PRIMEIRO_ARQUIVO_TESTE 1
 #define NUM_ARQUIVOS_TESTE 7
@@ -33,17 +30,19 @@
 
 void leitura_arquivos(int num_teste, char* pnome_arquivo);
 void nome_arquivo_testes(int num_teste, char* pnome_arquivo);
+void formata_tempo(char* str_tempo);
 
 /* Funções */
 
-// Função principal. Entrada obtida através de arquivo
+// Função principal
 int main()
 {
     // Declarações
-    clock_t start, end;  // cock_t YEP COCK (Clock)
+    clock_t start, end;  // Clock
     int num_teste = 0;  // Número de teste dos arquivos
-    char nome_arquivo[MAX_CHAR_LIMIT];
-    char *pnome_arquivo = nome_arquivo;
+    char *pnome_arquivo;  // Nome do arquivo lido para input
+    char *str_tempo;  // String de tempo
+    FILE* output;  // Arquivo de saída
 
     printf("Escolha um numero de arquivo de teste (1 a 7): ");
     scanf("%d", &num_teste);
@@ -54,12 +53,26 @@ int main()
     }
     nome_arquivo_testes(num_teste, pnome_arquivo);  
 
+    /* Medição de tempo do algoritmo */
     start = clock();
     leitura_arquivos(num_teste, pnome_arquivo);
     end = clock();
     
     double tempo_gasto = ((double)(end - start) / CLOCKS_PER_SEC);  // Registra tempo gasto
-    printf("Tempo gasto para permutação: %lf", tempo_gasto);
+    printf("Tempo gasto para permutação: %lf seg\n", tempo_gasto);
+
+    /* Após printar em console, o tipo de teste e o tempo são registrados em um arquivo
+     * Formato segue assim:
+     * DATA_ATUAL NUM_TESTE TEMPO_GASTO
+     */
+
+    formata_tempo(str_tempo);  // Salva a data e hora atual para salvar no output
+
+    output = fopen("output.txt", "r+");
+
+    fseek(output, 0, SEEK_END);  // Feito para imprimir na última linha
+    fprintf(output, "%s %d %lf\n", str_tempo, num_teste, tempo_gasto);
+    fclose(output);
 
     return 0;
 }
@@ -74,7 +87,6 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     int Ci, Cj, Dij;  // Cidade i, Cidade j, Distância entre cidades i e j, linhas seguintes
     
     FILE* input;  // Arquivo de entrada
-    FILE* output;  // Arquivo de saída (possivelmente necessario)
     
     /* 
      * 
@@ -180,4 +192,23 @@ void nome_arquivo_testes(int num_teste, char* nome_arquivo)
             printf("Arquivo nao existe.\n");
             exit(1);
     }
+}
+
+// Formata tempo atual para salvar no output
+void formata_tempo(char* str_tempo)
+{
+    time_t tempo_unix;
+    struct tm* tempo_info;
+    
+    time(&tempo_unix);  // Pega tempo em unix
+    tempo_info = localtime(&tempo_unix);  // Converte tempo em unix para tempo local
+    
+    sprintf(str_tempo,  // String de output
+        "[%d %d %d %d:%d:%d]",  // Formato
+        tempo_info->tm_mday,  // Dia
+        tempo_info->tm_mon + 1, // Mês
+        tempo_info->tm_year + 1900,  // Anos desde 1900
+        tempo_info->tm_hour,  // Hora
+        tempo_info->tm_min,  // Minuto
+        tempo_info->tm_sec);  // Segundo
 }
