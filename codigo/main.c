@@ -18,6 +18,8 @@
 
 #include "distancias.h"
 #include "demandas.h"
+#include "permuta.h"
+#include "listaDeCidades.h"
 #include <time.h>
 
 #define MAX_CHAR_LIMIT 31
@@ -29,7 +31,6 @@
 
 void leitura_arquivos(int num_teste, char* pnome_arquivo);
 void nome_arquivo_testes(int num_teste, char* pnome_arquivo);
-
 
 /* Funções */
 
@@ -69,19 +70,17 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     int Qv;  // Capacidade do caminhão, linha 2
     int D;  // Demanda de cada cidade, linha 3, implementada como vetor
     int Ci, Cj, Dij;  // Cidade i, Cidade j, Distância entre cidades i e j, linhas seguintes
-
-    Tpermuta permutador;
     
     FILE* input;  // Arquivo de entrada
     FILE* output;  // Arquivo de saída (possivelmente necessario)
     
-    input = fopen(pnome_arquivo, "r");  // Abre o arquivo para leitura
-
     /* 
      * 
      * Atribuições 
      *
      */
+
+    input = fopen(pnome_arquivo, "r");  // Abre o arquivo para leitura
 
     // Linha 1
     fscanf(input, "%d", &N);  // Recebe a quantidade de cidades
@@ -123,11 +122,13 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
                 preencher_matDist(matDist, Ci, Cj, Dij);
             }
         }
-    } 
+    }
+
     fclose(input);     
 
     // Permutação
-
+    listac = inicializaLista(N, Qv);
+    permutador = inicializaPermuta(listac);
 
     printf("Teste numero %d\n", num_teste);
     
@@ -135,7 +136,7 @@ void leitura_arquivos(int num_teste, char* pnome_arquivo)
     printf("Capacidade Caminhao = %d\n", Qv);
     exibir_vetDem(vetDem);
     exibir_matDist(matDist);
-
+    exibir_permuta(permutador);
     }
 
 }
