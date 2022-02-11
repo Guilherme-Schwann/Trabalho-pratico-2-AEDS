@@ -147,25 +147,25 @@ void nome_arquivo_testes(int num_teste, char* nome_arquivo)
     switch (num_teste)  
     {
         case 1:
-            strcpy(nome_arquivo, "3_cidades.txt");
+            strcpy(nome_arquivo, "../3_cidades.txt");
             break;
         case 2:
-            strcpy(nome_arquivo, "4_cidades.txt");
+            strcpy(nome_arquivo, "../4_cidades.txt");
             break;
         case 3:
-            strcpy(nome_arquivo, "5_cidades.txt");
+            strcpy(nome_arquivo, "../5_cidades.txt");
             break;
         case 4:
-            strcpy(nome_arquivo, "6_cidades.txt");
+            strcpy(nome_arquivo, "../6_cidades.txt");
             break;
         case 5:
-            strcpy(nome_arquivo, "7_cidades.txt");
+            strcpy(nome_arquivo, "../7_cidades.txt");
             break;
         case 6:
-            strcpy(nome_arquivo, "8_cidades.txt");
+            strcpy(nome_arquivo, "../8_cidades.txt");
             break;
         case 7:
-            strcpy(nome_arquivo, "9_cidades.txt");
+            strcpy(nome_arquivo, "../9_cidades.txt");
             break;
 
         // Caso de erro
