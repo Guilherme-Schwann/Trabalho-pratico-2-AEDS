@@ -68,9 +68,8 @@ int main()
      * NUM_TESTE TEMPO_GASTO
      */
 
-    output = fopen("output.txt", "r+");
-
-    fseek(output, 0, SEEK_END);  // Feito para imprimir na última linha
+    output = fopen("output.txt", "a");
+  // Feito para imprimir na última linha
     fprintf(output, "%d %lf\n", num_teste, tempo_gasto);
     fclose(output);
     system("PAUSE");
