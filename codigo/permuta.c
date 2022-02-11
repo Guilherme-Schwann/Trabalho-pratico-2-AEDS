@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "permuta.h"
 
 int numDePermutacoes(int tam);
@@ -11,9 +10,10 @@ void geraMatrizFinal(Tpermuta* permuta);
 void insereZeros(Tpermuta* permuta, int* posZeros, int linhaPermuta, int linhaMF);
 void insereZeroInicial(Tpermuta* permuta, int linhaMF);
 
-Tpermuta inicializaPermuta(int tam, int* lista, int nVeic){
+Tpermuta inicializaPermuta(TlistaDeCidades lista, int nVeic){
     Tpermuta permuta;
-    int i, j;
+    int i, j, tam;
+    tam = lista.numCidades;
     permuta.var = 0;
     permuta.tam = tam;
     permuta.numdeperm = numDePermutacoes(tam);
@@ -26,10 +26,11 @@ Tpermuta inicializaPermuta(int tam, int* lista, int nVeic){
     }
     //Define a lista dentro do TAD permuta;
     for (i = 0; i < tam; i++){
-        permuta.lista[i] = lista[i];
+        permuta.lista[i] = i+1;
     }
     gera_permutacoes(&permuta);
     gera_combinacoes(&permuta);
+    escolhe_melhor_rota(&permuta, lista);
     return permuta;
 }
 
@@ -216,4 +217,37 @@ void insereZeroInicial(Tpermuta* permuta, int linhaMF) {
         permuta->matrizFinal[linhaMF][i+1] = temp;
     }
 }
-//cheguei neste ponto e comecei a questionar minhas escolhas de vida.
+
+int calculaDist(int* rota, TlistaDeCidades lista){
+    int i, linha, coluna, dist = 0, cap = 0;
+    for (i = 0; i < (lista.numCidades*3)-1; i++){
+        if (rota[i] != 0){
+            cap+=lista.listaCidades->demanda;
+            if (cap > lista.capacidadeVeic){
+                return 0;
+            }
+        }
+        linha = rota[i];
+        coluna = rota[i+1];
+        dist += lista.distancias[linha][coluna];
+    }
+    return dist;
+}
+
+void escolhe_melhor_rota(Tpermuta *permuta, TlistaDeCidades lista){
+    int i, *vendoRota, dist, melhorDist, *melhorRota;
+    vendoRota = (int*) malloc(lista.numCidades * sizeof(int));
+    for (i = 0; i < (permuta->numdecomb+1) * permuta->numdeperm; i++){
+        vendoRota = permuta->matrizFinal[i];
+        dist = calculaDist(vendoRota, lista);
+        if (i == 0) {
+            melhorDist = dist;
+            melhorRota = vendoRota;
+        } else if (dist != 0 && (dist < melhorDist || melhorDist == 0)) {
+            melhorDist = dist;
+            melhorRota = vendoRota;
+        }
+    }
+    permuta->melhorRota = melhorRota;
+    permuta->melhorDist = melhorDist;
+}

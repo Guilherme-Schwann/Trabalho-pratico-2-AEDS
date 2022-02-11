@@ -11,5 +11,3 @@ Tcidade criaCidade(int ind, int demanda);
 
 void passarCarga(Tcidade* cidade);
 void esvaziaCarga(Tcidade* cidade);
-
-void setDemanda(int demanda, Tcidade* cidade);

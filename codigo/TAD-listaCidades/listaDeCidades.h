@@ -1,19 +1,13 @@
 #include "../TAD-cidade/cidade.h"
 
 typedef struct {
-    int capacidadeIndividual;
-    int veiculosNecessarios;
-} TfrotaVeiculos;
-
-typedef struct {
     int** distancias;
     Tcidade *listaCidades;
     int numCidades;
-    TfrotaVeiculos frota;
+    int capacidadeVeic;
 } TlistaDeCidades;
 
 TlistaDeCidades inicializaLista(int N, int capacidadeVeiculos);
 
-void registraDistancias(TlistaDeCidades lista, int** dist);
-
-void setCapacidadeVeic(int capacidade, TlistaDeCidades* lista);
+void registraDistancias(TlistaDeCidades* lista, int** dist);
+void registraDemandas(TlistaDeCidades* lista, int* dem);
