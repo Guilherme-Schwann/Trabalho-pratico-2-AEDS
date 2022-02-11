@@ -85,7 +85,7 @@ void leitura_arquivos()
         Tdistancias *matDist;
         matDist = criar_matDist(N);
     
-        int L;
+        int num_linhas;
     
         if (N == 3){
             for (int k = 0; k <= N; k++){
@@ -94,8 +94,8 @@ void leitura_arquivos()
             }
         }
         else{
-            L = N + (N-1);
-            for (int k = 0; k <= L; k++){
+            num_linhas = N + (N-1);
+            for (int k = 0; k <= num_linhas; k++){
                 fscanf(input, "%d %d %d", &Ci, &Cj, &Dij);
                 preencher_matDist(matDist, Ci, Cj, Dij);
             }
