@@ -42,9 +42,7 @@ int main()
     clock_t start, end;  // Clock
     int num_teste = 0;  // Número de teste dos arquivos
     char nome_arquivo[MAX_CHAR_LIMIT];  // Nome do arquivo lido para input
-    char tempo[MAX_CHAR_LIMIT];  // String de tempo
     char *pnome_arquivo = nome_arquivo;
-    char *str_tempo = tempo;
     
     FILE* output;  // Arquivo de saída
 
@@ -67,15 +65,13 @@ int main()
 
     /* Após printar em console, o tipo de teste e o tempo são registrados em um arquivo
      * Formato segue assim:
-     * DATA_ATUAL NUM_TESTE TEMPO_GASTO
+     * NUM_TESTE TEMPO_GASTO
      */
-
-    formata_tempo(str_tempo);  // Salva a data e hora atual para salvar no output
 
     output = fopen("output.txt", "r+");
 
     fseek(output, 0, SEEK_END);  // Feito para imprimir na última linha
-    fprintf(output, "%s %d %lf\n", str_tempo, num_teste, tempo_gasto);
+    fprintf(output, "%d %lf\n", num_teste, tempo_gasto);
     fclose(output);
     system("PAUSE");
     return 0;
@@ -196,22 +192,4 @@ void nome_arquivo_testes(int num_teste, char* nome_arquivo)
             printf("Arquivo nao existe.\n");
             exit(1);
     }
-}
-
-// Formata tempo atual para salvar no output
-void formata_tempo(char* str_tempo)
-{
-    time_t instante = time(0);
-    struct tm *tempoInfo = localtime(&instante);
-
-    // Guarda o horário de criação no formato DD MM AAAA HH:MM:SS
-
-    sprintf(str_tempo, // String
-            "[%d %d %d %d:%d:%d]", // Formato
-            tempoInfo->tm_mday, // Dia
-            tempoInfo->tm_mon + 1, // Mês
-            tempoInfo->tm_year + 1900, // Ano
-            tempoInfo->tm_hour, // Horas
-            tempoInfo->tm_min, // Minutos
-            tempoInfo->tm_sec); // Segundos
 }
