@@ -10,14 +10,13 @@ void geraMatrizFinal(Tpermuta* permuta);
 void insereZeros(Tpermuta* permuta, int* posZeros, int linhaPermuta, int linhaMF);
 void insereZeroInicial(Tpermuta* permuta, int linhaMF);
 
-Tpermuta inicializaPermuta(TlistaDeCidades lista, int nVeic){
+Tpermuta inicializaPermuta(TlistaDeCidades lista){
     Tpermuta permuta;
     int i, j, tam;
     tam = lista.numCidades;
     permuta.var = 0;
     permuta.tam = tam;
     permuta.numdeperm = numDePermutacoes(tam);
-    permuta.nVeic = nVeic;
     //Aloca memória;
     permuta.lista = (int*) malloc(tam * sizeof(int));
     permuta.matrizRes = (int**) malloc(permuta.numdeperm * sizeof(int*));
@@ -226,6 +225,8 @@ int calculaDist(int* rota, TlistaDeCidades lista){
             if (cap > lista.capacidadeVeic){
                 return 0;
             }
+        } else {
+            cap = 0;
         }
         linha = rota[i];
         coluna = rota[i+1];

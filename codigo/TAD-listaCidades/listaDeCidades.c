@@ -26,7 +26,7 @@ void registraDemandas(TlistaDeCidades* lista, int* dem) {
     int i;
     for (i = 0; i < lista->numCidades; i++){
         if (i != 0){
-            lista->listaCidades[i] = criaCidade(i, dem[i]);
+            lista->listaCidades[i] = criaCidade(i, dem[i-1]);
         } else {
             lista->listaCidades[i] = criaCidade(i, 0);
         }

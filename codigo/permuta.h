@@ -16,6 +16,6 @@ typedef struct{
     int** matrizFinal;
 } Tpermuta;
 
-Tpermuta inicializaPermuta(TlistaDeCidades lista, int nVeic);
+Tpermuta inicializaPermuta(TlistaDeCidades lista);
 
 void escolhe_melhor_rota(Tpermuta *permuta, TlistaDeCidades lista);
